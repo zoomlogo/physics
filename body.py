@@ -16,6 +16,8 @@ class RigidBody:  # parent class to derieve from
         self.m = mass       # [kg] mass
         self.m_i = 1 / mass # [kg⁻¹] reciprocal of mass
 
+        self.cor = 1  # coefficient of restitution
+
         self.color = color
 
 
