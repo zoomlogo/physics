@@ -1,7 +1,8 @@
 # rigidbody implementations
 from pyglet.math import *
 
-class RigidBody:  # parent class to derieve from
+class RigidBody:
+    # parent class to derieve from
     def __init__(self,
         x,                       # [m] position
         mass = 1,                # [kg] mass
@@ -9,9 +10,10 @@ class RigidBody:  # parent class to derieve from
         color = (255, 255, 255), # color; white
         batch = None,
     ):
-        self.x = x  # [m] position
-        self.v = v0 # [m s⁻¹] velocity
-        self.a = 0  # [m s⁻²] acceleration
+        self.x = x   # [m] position
+        self.x0 = x  # [m] previous position
+        self.v = v0  # [m s⁻¹] velocity
+        self.a = 0   # [m s⁻²] acceleration
 
         self.m = mass       # [kg] mass
         self.m_i = 1 / mass # [kg⁻¹] reciprocal of mass
@@ -19,6 +21,7 @@ class RigidBody:  # parent class to derieve from
         self.cor = 1  # coefficient of restitution
 
         self.color = color
+        self.shape = None  # note: change this to the shape in inherited class
 
 
     def apply_forces(self,
@@ -32,16 +35,24 @@ class RigidBody:  # parent class to derieve from
     def update(self,
         dt, # [s] difference in time
     ):
+        # save the position
+        save_x = self.x
+        # update position with the previous position
+        self.x = self.x + (self.x - self.x0)
         # euler's method amiright
         # maybe use a different method for polygons or something
         # in simple words: multiply by dt to remove the time term
         # [m]     = [m s⁻¹] × [s]
         # [m s⁻¹] = [m s⁻²] × [s]
-        self.x = self.x + self.v * dt
-        self.v = self.v + self.a * dt
+        self.x = self.x + self.v.scale(dt)
+        self.v = self.v + self.a.scale(dt)
+        # set previous position to the saved (unupdated) position
+        self.x0 = save_x
 
         # reset acceleration
         self.a = Vec2()
+
+        # note: update the shapes in the inherited class
 
 
     # NotImplemented stuff, the children should implement it
