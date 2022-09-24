@@ -42,6 +42,7 @@ class RigidBody:
         # euler's method amiright
         # maybe use a different method, maybe RK4
         # RK4 ref: https://www.haroldserrano.com/blog/visualizing-the-runge-kutta-method
+        # https://gafferongames.com/post/integration_basics/
         # in simple words: multiply by dt to remove the time term
         # [m]     = [m s⁻¹] × [s]
         # [m s⁻¹] = [m s⁻²] × [s]
