@@ -1,4 +1,4 @@
-# rigidbody implementations
+# rigidbody parent class implementation
 from pyglet.math import *
 
 class RigidBody:
@@ -40,7 +40,7 @@ class RigidBody:
         # update position with the previous position
         self.x = self.x + (self.x - self.x0)
         # euler's method amiright
-        # maybe use a different method for polygons or something
+        # maybe use a different method, maybe RK4
         # in simple words: multiply by dt to remove the time term
         # [m]     = [m s⁻¹] × [s]
         # [m s⁻¹] = [m s⁻²] × [s]
