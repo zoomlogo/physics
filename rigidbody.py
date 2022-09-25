@@ -39,15 +39,12 @@ class RigidBody:
         save_x = self.x
         # update position with the previous position
         self.x = self.x + (self.x - self.x0)
-        # euler's method amiright
-        # maybe use a different method, maybe RK4
-        # RK4 ref: https://www.haroldserrano.com/blog/visualizing-the-runge-kutta-method
-        # https://gafferongames.com/post/integration_basics/
+        # implicit euler's method amiright
         # in simple words: multiply by dt to remove the time term
-        # [m]     = [m s⁻¹] × [s]
         # [m s⁻¹] = [m s⁻²] × [s]
-        self.x = self.x + self.v.scale(dt)
+        # [m]     = [m s⁻¹] × [s]
         self.v = self.v + self.a.scale(dt)
+        self.x = self.x + self.v.scale(dt)
         # set previous position to the saved (unupdated) position
         self.x0 = save_x
 
