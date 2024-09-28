@@ -5,19 +5,21 @@ class RigidBody:
     # parent class to derieve from
     def __init__(self,
         x,                       # [m] position
-        mass = 1,                # [kg] mass
-        v0 = Vec2(),             # [m s⁻¹] initial velocity
+        mass  = 1,               # [kg] mass
+        v0    = Vec2(),          # [m s⁻¹] initial velocity
         color = (255, 255, 255), # color; white
         batch = None,
     ):
-        self.x = x   # [m] position
+        # kinetics
+        self.x  = x  # [m] position
         self.x0 = x  # [m] previous position
-        self.v = v0  # [m s⁻¹] velocity
-        self.a = 0   # [m s⁻²] acceleration
+        self.v  = v0 # [m s⁻¹] velocity
+        self.a  = 0  # [m s⁻²] acceleration
 
-        self.m = mass       # [kg] mass
+        self.m   = mass     # [kg] mass
         self.m_i = 1 / mass # [kg⁻¹] reciprocal of mass
 
+        # properties
         self.cor = 1  # coefficient of restitution
 
         self.color = color
@@ -33,14 +35,14 @@ class RigidBody:
 
     
     def update(self,
-        dt, # [s] difference in time
+        dt, # [s] tiny change in time
     ):
         # save the position
         save_x = self.x
-        # update position with the previous position
+        # update position with the previous position (why?)
         self.x = self.x + (self.x - self.x0)
-        # implicit euler's method amiright
-        # in simple words: multiply by dt to remove the time term
+        # implicit euler's method amiright (future: implement runge-kutta)
+        # in simple words: multiply by dt to remove the time term (kinematics i guess)
         # [m s⁻¹] = [m s⁻²] × [s]
         # [m]     = [m s⁻¹] × [s]
         self.v = self.v + self.a.scale(dt)
